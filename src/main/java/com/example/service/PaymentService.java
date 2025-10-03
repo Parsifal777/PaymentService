@@ -1,5 +1,7 @@
 package com.example.service;
 
+import com.example.aspect.LogLevel;
+import com.example.aspect.ToLog;
 import com.example.model.Payment;
 import com.example.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +32,13 @@ public class PaymentService {
         return paymentRepository.findById(id);
     }
 
+    @ToLog(value = "Добавление нового платежа", level = LogLevel.INFO)
     public Payment addPayment(Payment payment) {
         logOperation("Добавлен платеж: " + payment.getAmount() + " от " + payment.getResident().getFullName());
         return paymentRepository.save(payment);
     }
 
+    @ToLog(value = "Удаление платежа", level = LogLevel.WARN)
     public void deletePayment(Long id) {
         paymentRepository.deleteById(id);
         logOperation("Удален платеж с ID: " + id);

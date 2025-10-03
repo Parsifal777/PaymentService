@@ -1,5 +1,7 @@
 package com.example.service;
 
+import com.example.aspect.LogLevel;
+import com.example.aspect.ToLog;
 import com.example.model.Resident;
 import com.example.repository.ResidentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,13 @@ public class ResidentService {
         return residentRepository.findById(id);
     }
 
+    @ToLog(value = "Добавление нового жильца", level = LogLevel.INFO)
     public Resident addResident(Resident resident) {
         logOperation("Добавлен жилец: " + resident.getFullName());
         return residentRepository.save(resident);
     }
 
+    @ToLog(value = "Обновление информации о жильце", level = LogLevel.INFO)
     public Resident setInfo(String adress, String fullNAme, Long id, Resident people) {
         people.setAddress(adress);
         people.setFullName(fullNAme);
@@ -41,6 +45,7 @@ public class ResidentService {
         return residentRepository.save(people);
     }
 
+    @ToLog(value = "Удаление жильца из системы", level = LogLevel.WARN)
     public void deleteResident(Long id) {
         residentRepository.deleteById(id);
         logOperation("Удален жилец с ID: " + id);
@@ -56,4 +61,6 @@ public class ResidentService {
             e.printStackTrace();
         }
     }
+
+
 }

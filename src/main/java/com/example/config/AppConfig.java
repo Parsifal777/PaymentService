@@ -3,15 +3,13 @@ package com.example.config;
 import com.example.model.Resident;
 import com.example.model.Invoice;
 import com.example.model.Payment;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 
 import java.time.LocalDate;
 
 @Configuration
 @ComponentScan(basePackages = "com.example")
+@EnableAspectJAutoProxy
 public class AppConfig {
 
     @Bean

@@ -81,5 +81,26 @@ public class Main {
         tariffDirectory.deleteTariff(3L);
 
         System.out.println("Все операции с тарифами записаны в журнал:");
+
+        System.out.println("Демонстрация аспектов с аннотацией @ToLog:");
+
+        Resident resident = new Resident(1L, "Иванов Иван", "ул. Ленина, 10");
+        residentService.addResident(resident);
+
+        Resident resident3 = new Resident();
+        residentService.setInfo("ул. Пушкина, 20", "Петров Петр", 2L, resident3);
+
+        try {
+            residentService.deleteResident(999L);
+        } catch (Exception e) {
+            System.out.println("Ожидаемая ошибка при удалении: " + e.getMessage());
+        }
+
+        Payment payment = new Payment(1L, resident, LocalDate.now(), 2500.0);
+        paymentService.addPayment(payment);
+
+        paymentService.deletePayment(1L);
+
+        System.out.println("Все операции залогированы аспектами:");
     }
 }
